@@ -13,15 +13,13 @@ Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RS
 const int down = 4;
 const int up   = 0; 
 
-// 1. Create a custom structure to hold all our account info together
+
 struct VaultEntry {
   const char* siteName;
   const char* username;
   const char* password;
 };
 
-// 2. Turn our simple list into our structured vault array!
-// (Remember to use your trick of swapping '@' for '"' if your keyboard layout requires it)
 VaultEntry vault[] = {
   {"GOOGLE",     "moslembashaa@gmail.com", "####"},
   {"GITHUB",     "moslembashaa-rgb",     "--------"},
@@ -46,7 +44,7 @@ void setup() {
 }
 
 void loop() {
-  // --- MODE 0: MENU NAVIGATION ---
+
   if (Mode == 0) {
     if (digitalRead(down) == LOW) {
       unsigned long press = millis();
@@ -56,7 +54,7 @@ void loop() {
         if (millis() - press > 800) {
           Long = true;
           Mode = 1; 
-          showSelectedScreen(); // Updates the display with matching account details
+          showSelectedScreen();
           while(digitalRead(down) == LOW); 
         }
       }
@@ -78,7 +76,7 @@ void loop() {
     }
   }
   
-  // --- MODE 1: SELECTED LOCKED MODE ---
+
   else if (Mode == 1) {
     if (digitalRead(up) == LOW) {
       unsigned long press = millis();
@@ -115,27 +113,27 @@ void drawMenu() {
     if (i == item) {
       tft.setTextColor(ST77XX_BLACK, ST77XX_YELLOW);
       tft.print(" > ");
-      tft.println(vault[i].siteName); // Pulls name from struct
+      tft.println(vault[i].siteName); 
     } else {
       tft.setTextColor(ST77XX_WHITE, ST77XX_BLACK);
       tft.print("   "); 
-      tft.println(vault[i].siteName); // Pulls name from struct
+      tft.println(vault[i].siteName); 
     }
   }
 }
 
-// 3. Updated display engine to dynamically show the account data!
+
 void showSelectedScreen() {
   tft.fillScreen(ST77XX_BLACK);
   
-  // Header
+
   tft.setCursor(10, 30);
   tft.setTextColor(ST77XX_CYAN);
   tft.setTextSize(2);
-  tft.println(vault[item].siteName); // Dynamic site title
+  tft.println(vault[item].siteName); 
   tft.println("====================");
   
-  // Username block
+
   tft.setCursor(10, 80);
   tft.setTextColor(ST77XX_YELLOW);
   tft.setTextSize(1);
@@ -143,9 +141,9 @@ void showSelectedScreen() {
   tft.setCursor(10, 100);
   tft.setTextColor(ST77XX_WHITE);
   tft.setTextSize(2);
-  tft.println(vault[item].username); // Dynamic username
+  tft.println(vault[item].username); 
   
-  // Password block
+
   tft.setCursor(10, 150);
   tft.setTextColor(ST77XX_YELLOW);
   tft.setTextSize(1);
@@ -153,9 +151,7 @@ void showSelectedScreen() {
   tft.setCursor(10, 170);
   tft.setTextColor(ST77XX_GREEN);
   tft.setTextSize(2);
-  tft.println(vault[item].password); // Dynamic password!
-  
-  // Footer
+
   tft.setCursor(10, 280);
   tft.setTextColor(ST77XX_RED);
   tft.setTextSize(1);
