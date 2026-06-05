@@ -2,7 +2,7 @@
 #include <Adafruit_ST7789.h> 
 #include <SPI.h>
 
-// Your screen pins (using the ones that worked yesterday!)
+
 #define TFT_CS         13  
 #define TFT_RST        10  
 #define TFT_DC         9   
